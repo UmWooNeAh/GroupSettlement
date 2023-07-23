@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:untitled/class_receiptitem.dart';
-import 'package:untitled/class_settlementitem.dart';
-import 'package:untitled/class_settlementpaper.dart';
-import 'package:untitled/class_user.dart';
-import 'package:untitled/class_group.dart';
+import 'package:group_settlement/class_receiptitem.dart';
+import 'package:group_settlement/class_settlementitem.dart';
+import 'package:group_settlement/class_settlementpaper.dart';
+import 'package:group_settlement/class_user.dart';
+import 'package:group_settlement/class_group.dart';
 import 'package:logger/logger.dart';
 import 'class_receipt.dart';
 import 'class_settlement.dart';
