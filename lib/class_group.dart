@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'fire_service.dart';
 
 class Group {
 
@@ -49,24 +48,45 @@ class Group {
     Users = users;
     GroupName = groupname;
 
-    await FireService().createGroup(toJson(), groupid);
+    await FirebaseFirestore.instance.collection("grouplist").doc(groupid).set(toJson());
     return Group;
   }
 
   deleteGroup() async {
-    FireService().deleteCollection(reference!);
+    await reference!.delete();
   }
 
   deleteGroupByid(String path, String id) async {
-    FireService().deleteCollectionById(path, id);
+    await FirebaseFirestore.instance.collection(path).doc(id).delete();
   }
 
   updateGroup() async{
-    FireService().updateCollection(reference: reference!, json: toJson());
+    await reference!.update(toJson());
   }
 
   updateGroupByid(String path, String id) async {
-    FireService().deleteCollectionById(path, id);
+    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
+  }
+
+  Future<List<Group>> getGroupList() async {
+    CollectionReference<Map<String, dynamic>> _collectionReference =
+    FirebaseFirestore.instance.collection("grouplist");
+    QuerySnapshot<Map<String,dynamic>> querySnapshot =
+    await _collectionReference.get();
+    List<Group> groups = [];
+    for(var doc in querySnapshot.docs) {
+      Group group = Group.fromQuerySnapshot(doc);
+      groups.add(group);
+    }
+    logger.d(groups);
+    return groups;
+  }
+
+  Future<Group> getGroupByGroupId(String groupid) async{
+    DocumentSnapshot<Map<String, dynamic>> result =
+    await FirebaseFirestore.instance.collection("grouplist").doc(groupid).get();
+    Group group = Group.fromSnapShot(result);
+    return group;
   }
 
   Group.fromSnapShot(

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'fire_service.dart';
 
 
 class Receipt {
@@ -42,33 +41,54 @@ class Receipt {
     return map;
   }
 
-  createReceipt(String receiptid, List<String> receiptitems, String storename,
+  createReceipt(String id, List<String> receiptitems, String storename,
       DateTime time, int totalprice) async {
 
-      ReceiptId = receiptid;
-      ReceiptItems = receiptitems;
-      StoreName = storename;
-      Time = time;
-      TotalPrice = totalprice;
+    ReceiptId = id;
+    ReceiptItems = receiptitems;
+    StoreName = storename;
+    Time = time;
+    TotalPrice = totalprice;
 
-    await FireService().createReceipt(toJson(), receiptid);
+    await FirebaseFirestore.instance.collection("receiptlist").doc(id).set(toJson());
     return Receipt;
   }
 
   deleteReceipt() async {
-    FireService().deleteCollection(reference!);
+    await reference!.delete();
   }
 
   deleteReceiptById(String path, String id) async {
-    FireService().deleteCollectionById(path, id);
+    await FirebaseFirestore.instance.collection(path).doc(id).delete();
   }
 
   updateReceipt() async {
-    FireService().updateCollection(reference: reference!, json: toJson());
+    await reference!.update(toJson());
   }
 
   updateReceiptById(String path, String id) async {
-    FireService().updateCollectionById(collectionPath: path, id: id, json: toJson());
+    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
+  }
+
+  Future<List<Receipt>> getReceiptList() async {
+    CollectionReference<Map<String, dynamic>> _collectionReference =
+    FirebaseFirestore.instance.collection("receiptlist");
+    QuerySnapshot<Map<String,dynamic>> querySnapshot =
+    await _collectionReference.get();
+    List<Receipt> receipts = [];
+    for(var doc in querySnapshot.docs) {
+      Receipt receipt = Receipt.fromQuerySnapshot(doc);
+      receipts.add(receipt);
+    }
+    logger.d(receipts);
+    return receipts;
+  }
+
+  Future<Receipt> getReceiptByReceiptId(String receiptid) async {
+    DocumentSnapshot<Map<String, dynamic>> result =
+    await FirebaseFirestore.instance.collection("receiptlist").doc(receiptid).get();
+    Receipt receipt = Receipt.fromSnapShot(result);
+    return receipt;
   }
 
   Receipt.fromSnapShot(

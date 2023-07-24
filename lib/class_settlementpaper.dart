@@ -1,6 +1,5 @@
 import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'fire_service.dart';
 
 class SettlementPaper {
 
@@ -46,24 +45,46 @@ class SettlementPaper {
     SettlementItems = items;
     TotalPrice = totalprice;
 
-    await FireService().createSettlementPaper(toJson(), id);
+    await FirebaseFirestore.instance.collection("settlementpaperlist").doc(id).set(toJson());
     return SettlementPaper;
   }
 
-  updateSettlementPaper() async {
-    FireService().updateCollection(reference: reference!, json: toJson());
-  }
-
-  updateSettlementPaperById(String path, String id) async {
-    FireService().updateCollectionById(collectionPath: path, id: id, json: toJson());
-  }
-
   deleteSettlementPaper() async {
-    FireService().deleteCollection(reference!);
+    await reference!.delete();
   }
 
   deleteSettlementPaperById(String path, String id) async {
-    FireService().deleteCollectionById(path, id);
+    await FirebaseFirestore.instance.collection(path).doc(id).delete();
+  }
+
+  updateSettlementPaper() async {
+    await reference!.update(toJson());
+  }
+
+  updateSettlementPaperById(String path, String id) async {
+    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
+  }
+
+  Future<List<SettlementPaper>> getSettlementPaperList() async {
+    CollectionReference<Map<String, dynamic>> _collectionReference =
+    FirebaseFirestore.instance.collection("settlementpaperlist");
+    QuerySnapshot<Map<String,dynamic>> querySnapshot =
+    await _collectionReference.get();
+    List<SettlementPaper> papers = [];
+    for(var doc in querySnapshot.docs) {
+      SettlementPaper paper = SettlementPaper.fromQuerySnapshot(doc);
+      papers.add(paper);
+    }
+    logger.d(papers);
+    return papers;
+  }
+
+  Future<SettlementPaper> getSettlementPaperByPaperId(String paperid) async{
+    DocumentSnapshot<Map<String, dynamic>> result =
+    await FirebaseFirestore.instance.collection("settlemntpaperlist")
+        .doc(paperid).get();
+    SettlementPaper paper = SettlementPaper.fromSnapShot(result);
+    return paper;
   }
 
   SettlementPaper.fromSnapShot(

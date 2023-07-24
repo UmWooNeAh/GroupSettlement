@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'fire_service.dart';
 
 class Settlement {
 
@@ -56,24 +55,45 @@ class Settlement {
     Users = users;
     CheckSent = checksent;
 
-    await FireService().createSettlement(toJson(), id);
+    await FirebaseFirestore.instance.collection("settlementlist").doc(id).set(toJson());
     return Settlement;
   }
 
   deleteSettlement() async {
-    FireService().deleteCollection(reference!);
+    await reference!.delete();
   }
 
   deleteSettlementById(String path, String id) async {
-    FireService().deleteCollectionById(path, id);
+    await FirebaseFirestore.instance.collection(path).doc(id).delete();
   }
 
   updateSettlement() async {
-    FireService().updateCollection(reference: reference!, json: toJson());
+    await reference!.update(toJson());
   }
 
   updateSettlementById(String path, String id) async {
-    FireService().updateCollectionById(collectionPath: path, id: id, json: toJson());
+    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
+  }
+
+  Future<List<Settlement>> getSettlementList() async {
+    CollectionReference<Map<String, dynamic>> _collectionReference =
+    FirebaseFirestore.instance.collection("settlementlist");
+    QuerySnapshot<Map<String,dynamic>> querySnapshot =
+    await _collectionReference.get();
+    List<Settlement> settlements = [];
+    for(var doc in querySnapshot.docs) {
+      Settlement stment = Settlement.fromQuerySnapshot(doc);
+      settlements.add(stment);
+    }
+    logger.d(settlements);
+    return settlements;
+  }
+
+  Future<Settlement> getSettlementBySettlementId(String settlemntid) async{
+    DocumentSnapshot<Map<String, dynamic>> result =
+    await FirebaseFirestore.instance.collection("settlemntlist").doc(settlemntid).get();
+    Settlement stment = Settlement.fromSnapShot(result);
+    return stment;
   }
 
   Settlement.fromSnapShot(

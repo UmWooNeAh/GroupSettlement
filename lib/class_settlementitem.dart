@@ -1,6 +1,5 @@
 import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'fire_service.dart';
 
 
 class SettlementItem {
@@ -37,31 +36,52 @@ class SettlementItem {
   }
 
   createSettlementItem(String id, int usercount,
-      String name, Float price) async {
+    String name, Float price) async {
 
-      ReceiptItemId = id;
-      MenuCount = usercount;
-      MenuName = name;
-      Price = price;
+    ReceiptItemId = id;
+    MenuCount = usercount;
+    MenuName = name;
+    Price = price;
 
-    await FireService().createSettlementItem(toJson(), id);
+    await FirebaseFirestore.instance.collection("settlemenitemtlist").doc(id).set(toJson());
     return SettlementItem;
   }
 
   deleteSettlementItem() async {
-    FireService().deleteCollection(reference!);
+    await reference!.delete();
   }
 
   deleteSettlementItemById(String path, String id) async {
-    FireService().deleteCollectionById(path, id);
+    await FirebaseFirestore.instance.collection(path).doc(id).delete();
   }
 
   updateSettlementItem() async {
-    FireService().updateCollection(reference: reference!, json: toJson());
+    await reference!.update(toJson());
   }
 
   updateSettlementItemById(String path, String id) async {
-    FireService().updateCollectionById(collectionPath: path ,id: id, json: toJson());
+    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
+  }
+
+  Future<List<SettlementItem>> getSettlementItemList() async {
+    CollectionReference<Map<String, dynamic>> _collectionReference =
+    FirebaseFirestore.instance.collection("settlementitemlist");
+    QuerySnapshot<Map<String,dynamic>> querySnapshot =
+    await _collectionReference.get();
+    List<SettlementItem> items = [];
+    for(var doc in querySnapshot.docs) {
+      SettlementItem item = SettlementItem.fromQuerySnapshot(doc);
+      items.add(item);
+    }
+    logger.d(items);
+    return items;
+  }
+
+  Future<SettlementItem> getSettlementItemBySettlementItemId(String settlementitemid) async {
+    DocumentSnapshot<Map<String, dynamic>> result =
+    await FirebaseFirestore.instance.collection("settlementitemlist").doc(settlementitemid).get();
+    SettlementItem item = SettlementItem.fromSnapShot(result);
+    return item;
   }
 
   SettlementItem.fromSnapShot(

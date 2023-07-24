@@ -65,6 +65,13 @@ class User {
     return users;
   }
 
+  Future<User> getUserByUserId(String userid) async{
+    DocumentSnapshot<Map<String, dynamic>> result =
+    await FirebaseFirestore.instance.collection("userlist").doc(userid).get();
+    User user = User.fromSnapShot(result);
+    return user;
+  }
+
   User.fromSnapShot(
     DocumentSnapshot<Map<String, dynamic>> snapshot)
     : this.fromJson(snapshot.data(), snapshot.reference);
