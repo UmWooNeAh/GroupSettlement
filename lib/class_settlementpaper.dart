@@ -20,10 +20,7 @@ class SettlementPaper {
   SettlementPaper.fromJson(dynamic json, this.reference) {
     SettlementPaperId = json['settlementpaperid'];
     User = json['user'];
-    SettlementItems = [];
-    for(var item in json['settlementitems']) {
-      SettlementItems?.add(item);
-    }
+    SettlementItems = List<String>.from(json["settlementitems"]);
     TotalPrice = json['totalprice'];
   }
 
@@ -75,7 +72,6 @@ class SettlementPaper {
       SettlementPaper paper = SettlementPaper.fromQuerySnapshot(doc);
       papers.add(paper);
     }
-    logger.d(papers);
     return papers;
   }
 

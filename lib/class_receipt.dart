@@ -21,10 +21,7 @@ class Receipt {
 
   Receipt.fromJson(dynamic json, this.reference) {
     ReceiptId = json['receiptid'];
-    ReceiptItems = [];
-    for(var item in json['receiptitems']) {
-      ReceiptItems?.add(item);
-    }
+    ReceiptItems = List<String>.from(json["receiptsitems"]);
     StoreName = json['storename'];
     Time = json['time'];
     TotalPrice = json['totalprice'];
@@ -80,7 +77,6 @@ class Receipt {
       Receipt receipt = Receipt.fromQuerySnapshot(doc);
       receipts.add(receipt);
     }
-    logger.d(receipts);
     return receipts;
   }
 

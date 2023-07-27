@@ -20,19 +20,10 @@ class Settlement {
 
   Settlement.fromJson(dynamic json, this.reference) {
     SettlementId = json['settlementid'];
-    Receipts = [];
-    for(var receipt in json['receipts']) {
-      Receipts?.add(receipt);
-    }
-    SettlementPapers = [];
-    for(var paper in json['settlementpapers']) {
-      SettlementPapers?.add(paper);
-    }
-    Users = [];
-    for(var user in json['users']) {
-      Users?.add(user);
-    }
-    CheckSent = json['checksent'];
+    Receipts = List<String>.from(json["receipts"]);
+    SettlementPapers = List<String>.from(json["settlementpapers"]);
+    Users = List<String>.from(json["users"]);
+    CheckSent = Map<String, bool>.from(json['checksent']);
   }
 
   Map<String, dynamic> toJson() {
@@ -85,7 +76,6 @@ class Settlement {
       Settlement stment = Settlement.fromQuerySnapshot(doc);
       settlements.add(stment);
     }
-    logger.d(settlements);
     return settlements;
   }
 

@@ -19,14 +19,8 @@ class Group {
   Group.fromJson(dynamic json, this.reference) {
 
     GroupId = json['groupid'];
-    Settlements = [];
-    for(var settlement in json['settlements']) {
-      Settlements?.add(settlement);
-    }
-    Users = [];
-    for(var user in json['users']) {
-      Users?.add(user);
-    }
+    Settlements = List<String>.from(json["settlements"]);
+    Users = List<String>.from(json["users"]);
     GroupName = json['groupName'];
   }
 
@@ -78,7 +72,6 @@ class Group {
       Group group = Group.fromQuerySnapshot(doc);
       groups.add(group);
     }
-    logger.d(groups);
     return groups;
   }
 

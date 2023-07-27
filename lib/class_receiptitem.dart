@@ -20,10 +20,7 @@ class ReceiptItem {
 
   ReceiptItem.fromJson(dynamic json, this.reference) {
     ReceiptItemId = json['receiptitemid'];
-    Users = [];
-    for(var user in json['users']) {
-      Users?.add(user);
-    }
+    Users = List<String>.from(json["users"]);
     MenuName = json['menuname'];
     MenuCount = json['menucount'];
     MenuPrice = json['menuprice'];
@@ -79,7 +76,6 @@ class ReceiptItem {
       ReceiptItem item = ReceiptItem.fromQuerySnapshot(doc);
       receiptitems.add(item);
     }
-    logger.d(receiptitems);
     return receiptitems;
   }
 

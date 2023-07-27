@@ -73,7 +73,6 @@ class SettlementItem {
       SettlementItem item = SettlementItem.fromQuerySnapshot(doc);
       items.add(item);
     }
-    logger.d(items);
     return items;
   }
 
