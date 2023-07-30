@@ -1,35 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:group_settlement/common_fireservice.dart';
+import 'package:untitled/common_fireservice.dart';
 class User {
  
-  String? UserId;
-  String? Name;
-  String? KakaoId;
+  String? userId;
+  String? name;
+  String? kakaoId;
+  List<String>? groups;
+  List<String>? settlements;
+  List<String>? settlementPapers;
+
   DocumentReference? reference;
 
   User ({
-    this.UserId,
-    this.Name,
-    this.KakaoId,
+    this.userId,
+    this.name,
+    this.kakaoId,
     this.reference,
 });
 
   User.fromJson(dynamic json, this.reference) {
-    UserId = json['userid'];
-    Name = json['name'];
-    KakaoId = json['kakaoid'];
+    userId = json['userid'];
+    name = json['name'];
+    kakaoId = json['kakaoid'];
   }
 
   Map<String, dynamic> toJson() => {
-    'userid' : UserId,
-    'name' : Name,
-    'kakaoid' : KakaoId,
+    'userid' : userId,
+    'name' : name,
+    'kakaoid' : kakaoId,
   };
 
-  createUser(String userid, String name, String kakaoid) async {
-    UserId = userid;
-    Name = name;
-    KakaoId = kakaoid;
+  createUser(String userid, String _name, String kakaoid) async {
+    userId = userid;
+    name = _name;
+    kakaoId = kakaoid;
     await FirebaseFirestore.instance.collection("userlist").doc(userid).set(toJson());
     return User;
   }

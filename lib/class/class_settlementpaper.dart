@@ -3,41 +3,46 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettlementPaper {
 
-  String? SettlementPaperId;
-  String? User;
-  List<String>? SettlementItems;
-  Float? TotalPrice;
+  String? settlementPaperId;
+  String? settlementId;
+  String? userId;
+  List<String>? settlementItems;
+  Float? totalPrice;
   DocumentReference? reference;
 
   SettlementPaper ({
-    this.SettlementPaperId,
-    this.User,
-    this.SettlementItems,
-    this.TotalPrice,
+    this.settlementPaperId,
+    this.settlementId,
+    this.userId,
+    this.settlementItems,
+    this.totalPrice,
     this.reference,
   });
 
   SettlementPaper.fromJson(dynamic json, this.reference) {
-    SettlementPaperId = json['settlementpaperid'];
-    User = json['user'];
-    SettlementItems = List<String>.from(json["settlementitems"]);
-    TotalPrice = json['totalprice'];
+    settlementPaperId = json['settlementpaperid'];
+    settlementId = json['settlementid'];
+    userId = json['userid'];
+    settlementItems = List<String>.from(json["settlementitems"]);
+    totalPrice = json['totalprice'];
   }
 
   Map<String, dynamic> toJson() => {
-    'settlementpaperid' : SettlementPaperId,
-    'user' : User,
-    'settlementitems' : SettlementItems,
-    'totalprice' : TotalPrice,
+    'settlementpaperid' : settlementPaperId,
+    'settlementid' : settlementId,
+    'user' : userId,
+    'settlementitems' : settlementItems,
+    'totalprice' : totalPrice,
   };
 
-  createSettlementPaper(String id, String user, List<String> items,
+  createSettlementPaper(String id, String sid, String userid, List<String> items,
       Float totalprice) async {
 
-    SettlementPaperId = id;
-    User = user;
-    SettlementItems = items;
-    TotalPrice = totalprice;
+    settlementPaperId = id;
+    settlementId = sid;
+    userId = userid;
+    settlementItems = items;
+    totalPrice = totalprice;
 
     await FirebaseFirestore.instance.collection("settlementpaperlist").doc(id).set(toJson());
     return SettlementPaper;
