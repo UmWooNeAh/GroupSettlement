@@ -27,16 +27,13 @@ class Receipt {
     TotalPrice = json['totalprice'];
   }
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic> {};
-    map['receiptid'] = ReceiptId;
-    map['receiptitems'] = ReceiptItems;
-    map['storename'] = StoreName;
-    map['time'] = Time;
-    map['totalprice'] = TotalPrice;
-
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'receiptid' : ReceiptId,
+    'receiptitems' : ReceiptItems,
+    'storename' : StoreName,
+    'time' : Time,
+    'totalprice' : TotalPrice,
+  };
 
   createReceipt(String id, List<String> receiptitems, String storename,
       DateTime time, int totalprice) async {

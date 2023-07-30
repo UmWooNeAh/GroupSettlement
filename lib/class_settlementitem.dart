@@ -25,15 +25,12 @@ class SettlementItem {
     Price = json['price'];
   }
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic> {};
-    map['receiptitemid'] = ReceiptItemId;
-    map['usercount'] = MenuCount;
-    map['name'] = MenuName;
-    map['price'] = Price;
-
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'receiptitemid' : ReceiptItemId,
+    'usercount' : MenuCount,
+    'name' : MenuName,
+    'price' : Price,
+  };
 
   createSettlementItem(String id, int usercount,
     String name, Float price) async {

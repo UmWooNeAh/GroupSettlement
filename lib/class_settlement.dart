@@ -26,16 +26,13 @@ class Settlement {
     CheckSent = Map<String, bool>.from(json['checksent']);
   }
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic> {};
-    map['settlementid'] = SettlementId;
-    map['receipts'] = Receipts;
-    map['settlementpapers'] = SettlementPapers;
-    map['users'] = Users;
-    map['checksent'] = CheckSent;
-
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'settlementid' : SettlementId,
+    'receipts' : Receipts,
+    'settlementpapers' : SettlementPapers,
+    'users' : Users,
+    'checksent' : CheckSent,
+  };
 
   createSettlement(String id, List<String> receipts, List<String> settlementpapers,
       List<String> users, Map<String, bool> checksent) async {

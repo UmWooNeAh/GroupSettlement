@@ -26,16 +26,13 @@ class ReceiptItem {
     MenuPrice = json['menuprice'];
   }
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic> {};
-    map['receiptitemid'] = ReceiptItemId;
-    map['users'] = Users;
-    map['menuname'] = MenuName;
-    map['menucount'] = MenuCount;
-    map['menuprice'] = MenuPrice;
-
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'receiptitemid' :ReceiptItemId,
+    'users' : Users,
+    'menuname' : MenuName,
+    'menucount' : MenuCount,
+    'menuprice' : MenuPrice,
+  };
 
   createReceiptItem(String id, List<String> users,
       String menuname, int menucount, int menuprice) async {

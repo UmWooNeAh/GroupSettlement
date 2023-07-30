@@ -24,15 +24,12 @@ class SettlementPaper {
     TotalPrice = json['totalprice'];
   }
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic> {};
-    map['settlementpaperid'] = SettlementPaperId;
-    map['user'] = User;
-    map['settlementitems'] = SettlementItems;
-    map['totalprice'] = TotalPrice;
-
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'settlementpaperid' : SettlementPaperId,
+    'user' : User,
+    'settlementitems' : SettlementItems,
+    'totalprice' : TotalPrice,
+  };
 
   createSettlementPaper(String id, String user, List<String> items,
       Float totalprice) async {

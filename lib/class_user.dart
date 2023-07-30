@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:group_settlement/common_fireservice.dart';
 class User {
  
   String? UserId;
@@ -20,13 +20,11 @@ class User {
     KakaoId = json['kakaoid'];
   }
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic> {};
-    map['userid'] = UserId;
-    map['name'] = Name;
-    map['kakaoid'] = KakaoId;
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'userid' : UserId,
+    'name' : Name,
+    'kakaoid' : KakaoId,
+  };
 
   createUser(String userid, String name, String kakaoid) async {
     UserId = userid;

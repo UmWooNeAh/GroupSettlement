@@ -24,15 +24,12 @@ class Group {
     GroupName = json['groupName'];
   }
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic> {};
-
-    map['groupid'] = GroupId;
-    map['settlements'] = Settlements;
-    map['users'] = Users;
-    map['groupName'] = GroupName;
-    return map;
-  }
+  Map<String, dynamic> toJson() => {
+    'groupid' : GroupId,
+    'settlements': Settlements,
+    'users' : Users,
+    'groupName' : GroupName,
+  };
 
   createGroup(String groupid, List<String> settlements,
       List<String> users, String groupname) async {
