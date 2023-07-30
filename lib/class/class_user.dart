@@ -15,6 +15,9 @@ class User {
     this.userId,
     this.name,
     this.kakaoId,
+    this.groups,
+    this.settlements,
+    this.settlementPapers,
     this.reference,
 });
 
@@ -22,18 +25,28 @@ class User {
     userId = json['userid'];
     name = json['name'];
     kakaoId = json['kakaoid'];
+    groups = List<String>.from(json["groups"]);
+    settlements = List<String>.from(json["settlements"]);
+    settlementPapers = List<String>.from(json["settlementpapers"]);
   }
 
   Map<String, dynamic> toJson() => {
     'userid' : userId,
     'name' : name,
     'kakaoid' : kakaoId,
+    'groups' : groups,
+    'settlements' : settlements,
+    'settlementpapers' : settlementPapers,
   };
 
-  createUser(String userid, String _name, String kakaoid) async {
+  createUser(String userid, String _name, String kakaoid,
+      List<String> _groups, List<String> _settlements, List<String> settlementpapers) async {
     userId = userid;
     name = _name;
     kakaoId = kakaoid;
+    groups = _groups;
+    settlements = _settlements;
+    settlementPapers = settlementpapers;
     await FirebaseFirestore.instance.collection("userlist").doc(userid).set(toJson());
     return User;
   }
