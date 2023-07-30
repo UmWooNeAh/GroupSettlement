@@ -44,22 +44,6 @@ class SettlementItem {
     return SettlementItem;
   }
 
-  deleteSettlementItem() async {
-    await reference!.delete();
-  }
-
-  deleteSettlementItemById(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).delete();
-  }
-
-  updateSettlementItem() async {
-    await reference!.update(toJson());
-  }
-
-  updateSettlementItemById(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
-  }
-
   Future<List<SettlementItem>> getSettlementItemList() async {
     CollectionReference<Map<String, dynamic>> _collectionReference =
     FirebaseFirestore.instance.collection("settlementitemlist");

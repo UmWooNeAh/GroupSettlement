@@ -46,23 +46,7 @@ class ReceiptItem {
     await FirebaseFirestore.instance.collection("receiptitemlist").doc(id).set(toJson());
     return ReceiptItem;
   }
-
-  deleteRecieptItem() async {
-    await reference!.delete();
-  }
-
-  deleteRecieptItemById(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).delete();
-  }
-
-  updateRecieptItem() async {
-    await reference!.update(toJson());
-  }
-
-  updateRecieptItemById(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
-  }
-
+  
   Future<List<ReceiptItem>> getReceiptItemList() async {
     CollectionReference<Map<String, dynamic>> _collectionReference =
     FirebaseFirestore.instance.collection("receiptitemlist");

@@ -34,22 +34,6 @@ class User {
     return User;
   }
 
-  deleteUser() async{
-    await reference!.delete();
-  }
-
-  deleteUserByid(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).delete();
-  }
-
-  UpdateUser() async {
-    await reference!.update(toJson());
-  }
-
-  UpdateUserByid(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
-  }
-
   Future<List<User>> getUserList() async {
     CollectionReference<Map<String, dynamic>> _collectionReference =
     FirebaseFirestore.instance.collection("userlist");

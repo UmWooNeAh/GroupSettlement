@@ -43,22 +43,6 @@ class Group {
     return Group;
   }
 
-  deleteGroup() async {
-    await reference!.delete();
-  }
-
-  deleteGroupByid(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).delete();
-  }
-
-  updateGroup() async{
-    await reference!.update(toJson());
-  }
-
-  updateGroupByid(String path, String id) async {
-    await FirebaseFirestore.instance.collection(path).doc(id).update(toJson());
-  }
-
   Future<List<Group>> getGroupList() async {
     CollectionReference<Map<String, dynamic>> _collectionReference =
     FirebaseFirestore.instance.collection("grouplist");
