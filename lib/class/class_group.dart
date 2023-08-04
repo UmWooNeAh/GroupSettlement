@@ -1,43 +1,45 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'class_settlement.dart';
+import 'class_user.dart';
 
 class Group {
 
-  String? GroupId;
-  List<String>? Settlements;
-  List<String>? Users;
-  String? GroupName;
+  String? groupId;
+  List<String>? settlements;
+  List<String>? users;
+  String? groupName;
   DocumentReference? reference;
 
   Group ({
-    this.GroupId,
-    this.Settlements,
-    this.Users,
-    this.GroupName,
+    this.groupId,
+    this.settlements,
+    this.users,
+    this.groupName,
     this.reference,
   });
 
   Group.fromJson(dynamic json, this.reference) {
 
-    GroupId = json['groupid'];
-    Settlements = List<String>.from(json["settlements"]);
-    Users = List<String>.from(json["users"]);
-    GroupName = json['groupName'];
+    groupId = json['groupid'];
+    settlements = List<String>.from(json["settlements"]);
+    users = List<String>.from(json["users"]);
+    groupName = json['groupName'];
   }
 
   Map<String, dynamic> toJson() => {
-    'groupid' : GroupId,
-    'settlements': Settlements,
-    'users' : Users,
-    'groupName' : GroupName,
+    'groupid' : groupId,
+    'settlements': settlements,
+    'users' : users,
+    'groupName' : groupName,
   };
 
-  createGroup(String groupid, List<String> settlements,
-      List<String> users, String groupname) async {
+  createGroup(String groupid, List<String> _settlements,
+      List<String> _users, String groupname) async {
 
-    GroupId = groupid;
-    Settlements = settlements;
-    Users = users;
-    GroupName = groupname;
+    groupId = groupid;
+    settlements = _settlements;
+    users = _users;
+    groupName = groupname;
 
     await FirebaseFirestore.instance.collection("grouplist").doc(groupid).set(toJson());
     return Group;
@@ -61,6 +63,28 @@ class Group {
     await FirebaseFirestore.instance.collection("grouplist").doc(groupid).get();
     Group group = Group.fromSnapShot(result);
     return group;
+  }
+
+  Future<List<User>> getUserListInGroup() async {
+    List<User> userlist = [];
+    for(var userid in users!) {
+      DocumentSnapshot<Map<String, dynamic>> result =
+      await FirebaseFirestore.instance.collection("userlist").doc(userid).get();
+      User user = User.fromSnapShot(result);
+      userlist.add(user);
+    }
+    return userlist;
+  }
+
+  Future<List<Settlement>> getSettlementListInGroup() async {
+    List<Settlement> stmlist = [];
+    for(var stmid in settlements!) {
+      DocumentSnapshot<Map<String, dynamic>> result =
+      await FirebaseFirestore.instance.collection("settlementlist").doc(stmid).get();
+      Settlement stm = Settlement.fromSnapShot(result);
+      stmlist.add(stm);
+    }
+    return stmlist;
   }
 
   Group.fromSnapShot(

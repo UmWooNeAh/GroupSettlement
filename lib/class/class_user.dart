@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:untitled/common_fireservice.dart';
+import 'class_settlement.dart';
+
 class User {
  
   String? userId;
@@ -69,6 +70,17 @@ class User {
     await FirebaseFirestore.instance.collection("userlist").doc(userid).get();
     User user = User.fromSnapShot(result);
     return user;
+  }
+
+  Future<List<Settlement>> getSettlementListInUser() async {
+    List<Settlement> stmlist = [];
+    for(var stmid in settlements!) {
+      DocumentSnapshot<Map<String, dynamic>> result =
+      await FirebaseFirestore.instance.collection("settlementlist").doc(stmid).get();
+      Settlement stm = Settlement.fromSnapShot(result);
+      stmlist.add(stm);
+    }
+    return stmlist;
   }
 
   User.fromSnapShot(
