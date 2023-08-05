@@ -8,14 +8,15 @@ import '../class/class_settlementpaper.dart';
 
 class SettlementViewModel{
   // Information
-  Settlement                   settlement       = Settlement();
-  Map<String, Receipt>         receipts         = <String, Receipt>{};
-  Map<String, ReceiptItem>     receiptItems     = <String, ReceiptItem>{};
+  Settlement                    settlement       = Settlement();
+  Map<String, Receipt>          receipts         = <String, Receipt>{};
+  Map<String, ReceiptItem>      receiptItems     = <String, ReceiptItem>{};
 
   // Management
-  List<String>                 finalSettlement  = <String>[];
-  Map<String, SettlementPaper> settlementPapers = <String, SettlementPaper>{};
-  Map<String, SettlementItem>  settlementItems  = <String, SettlementItem>{};
+  List<String>                  finalSettlement  = <String>[];
+  Map<String, List>             subGroups        = <String, List>{};
+  Map<String, SettlementPaper?> settlementPapers = <String, SettlementPaper?>{};
+  Map<String, SettlementItem?>  settlementItems  = <String, SettlementItem?>{};
 
   SettlementViewModel(String settlementId){
     _settingSettlementViewModel(settlementId);
@@ -91,5 +92,54 @@ class SettlementViewModel{
     }
   }
 
+  void deleteSettlementItem(String receiptItemId, String userId){
+    // SettlementItem 삭제 paper에서 item 삭제, item객체 삭제, item map에서 삭제
+    for(int i = 0; i < settlementPapers[userId]!.settlementItems!.length; i++){
+      if(settlementItems[settlementPapers[userId]!.settlementItems![i]]!.receiptItemId == receiptItemId){
+        settlementPapers[userId]!.settlementItems!.removeAt(i);
+        settlementItems[settlementPapers[userId]!.settlementItems![i]] = null;
+        settlementItems.remove(settlementPapers[userId]!.settlementItems![i]);
+        break;
+      }
+    }
+
+    // SettlementPaper가 할당받은 settlementItem이 없다면 settlementpaper 삭제
+    if(settlementPapers[userId]!.settlementItems!.isEmpty){
+      for(int i = 0; i < settlement.settlementPapers!.length; i++){
+        if(settlement.settlementPapers![i] == settlementPapers[userId]!.settlementPaperId){
+          settlement.settlementPapers!.removeAt(i);
+          break;
+        }
+      }
+      settlementPapers[userId] = null;
+      settlementPapers.remove(userId);
+    }
+
+    // ReceiptItem에 user삭제
+    for(int i = 0; i < receiptItems[receiptItemId]!.users!.length; i++){
+      if(receiptItems[receiptItemId]!.users == userId){
+        receiptItems[receiptItemId]!.users!.removeAt(i);
+        break;
+      }
+    }
+
+    if(receiptItems[receiptItemId]!.users!.isEmpty){
+      finalSettlement.remove(receiptItemId);
+    }
+    else{
+      _updateSettlementItemPrice(receiptItemId);
+    }
+
+
+  }
+
+  void createSubGroup(userId1, userId2){
+    String newSubGroupId = "alwjebflakwejbflawebf";
+    subGroups[newSubGroupId] = [userId1, userId2];
+  }
+
+  void addUsertoSubGroup(String subGroupId, String userId){
+    subGroups[subGroupId]!.add(userId);
+  }
 
 }
