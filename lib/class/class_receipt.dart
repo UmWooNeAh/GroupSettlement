@@ -3,46 +3,51 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Receipt {
 
-  String? ReceiptId;
-  List<String>? ReceiptItems;
-  String? StoreName;
-  DateTime? Time;
-  int? TotalPrice;
+  String? receiptId;
+  String? settlementId;
+  List<String>? receiptItems;
+  String? storeName;
+  DateTime? time;
+  int? totalPrice;
   DocumentReference? reference;
 
   Receipt ({
-    this.ReceiptId,
-    this.ReceiptItems,
-    this.StoreName,
-    this.Time,
-    this.TotalPrice,
+    this.receiptId,
+    this.settlementId,
+    this.receiptItems,
+    this.storeName,
+    this.time,
+    this.totalPrice,
     this.reference,
   });
 
   Receipt.fromJson(dynamic json, this.reference) {
-    ReceiptId = json['receiptid'];
-    ReceiptItems = List<String>.from(json["receiptsitems"]);
-    StoreName = json['storename'];
-    Time = json['time'];
-    TotalPrice = json['totalprice'];
+    receiptId = json['receiptid'];
+    settlementId = json['settlementid'];
+    receiptItems = List<String>.from(json["receiptsitems"]);
+    storeName = json['storename'];
+    time = json['time'];
+    totalPrice = json['totalprice'];
   }
 
   Map<String, dynamic> toJson() => {
-    'receiptid' : ReceiptId,
-    'receiptitems' : ReceiptItems,
-    'storename' : StoreName,
-    'time' : Time,
-    'totalprice' : TotalPrice,
+    'receiptid' : receiptId,
+    'settlementid' : settlementId,
+    'receiptitems' : receiptItems,
+    'storename' : storeName,
+    'time' : time,
+    'totalprice' : totalPrice,
   };
 
-  createReceipt(String id, List<String> receiptitems, String storename,
-      DateTime time, int totalprice) async {
+  createReceipt(String id, String sid, List<String> receiptitems, String storename,
+      DateTime _time, int totalprice) async {
 
-    ReceiptId = id;
-    ReceiptItems = receiptitems;
-    StoreName = storename;
-    Time = time;
-    TotalPrice = totalprice;
+    receiptId = id;
+    settlementId = sid;
+    receiptItems = receiptitems;
+    storeName = storename;
+    time = _time;
+    totalPrice = totalprice;
 
     await FirebaseFirestore.instance.collection("receiptlist").doc(id).set(toJson());
     return Receipt;

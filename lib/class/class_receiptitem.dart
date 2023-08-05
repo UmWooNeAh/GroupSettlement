@@ -2,46 +2,46 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReceiptItem {
 
-  String? ReceiptItemId;
-  List<String>? Users;
-  String? MenuName;
-  int? MenuCount;
-  int? MenuPrice;
+  String? receiptItemId;
+  List<String>? users;
+  String? menuName;
+  int? menuCount;
+  int? menuPrice;
   DocumentReference? reference;
 
   ReceiptItem ({
-    this.ReceiptItemId,
-    this.Users,
-    this.MenuName,
-    this.MenuCount,
-    this.MenuPrice,
+    this.receiptItemId,
+    this.users,
+    this.menuName,
+    this.menuCount,
+    this.menuPrice,
     this.reference,
   });
 
   ReceiptItem.fromJson(dynamic json, this.reference) {
-    ReceiptItemId = json['receiptitemid'];
-    Users = List<String>.from(json["users"]);
-    MenuName = json['menuname'];
-    MenuCount = json['menucount'];
-    MenuPrice = json['menuprice'];
+    receiptItemId = json['receiptitemid'];
+    users = List<String>.from(json["users"]);
+    menuName = json['menuname'];
+    menuCount = json['menucount'];
+    menuPrice = json['menuprice'];
   }
 
   Map<String, dynamic> toJson() => {
-    'receiptitemid' :ReceiptItemId,
-    'users' : Users,
-    'menuname' : MenuName,
-    'menucount' : MenuCount,
-    'menuprice' : MenuPrice,
+    'receiptitemid' :receiptItemId,
+    'users' : users,
+    'menuname' : menuName,
+    'menucount' : menuCount,
+    'menuprice' : menuPrice,
   };
 
   createReceiptItem(String id, List<String> users,
       String menuname, int menucount, int menuprice) async {
 
-    ReceiptItemId = id;
-    Users = users;
-    MenuName = menuname;
-    MenuCount = menucount;
-    MenuPrice = menuprice;
+    receiptItemId = id;
+    users = users;
+    menuName = menuname;
+    menuCount = menucount;
+    menuPrice = menuprice;
 
     await FirebaseFirestore.instance.collection("receiptitemlist").doc(id).set(toJson());
     return ReceiptItem;

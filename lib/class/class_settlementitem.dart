@@ -4,41 +4,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettlementItem {
 
-  String? ReceiptItemId;
-  String? MenuName;
-  int? MenuCount;
-  Float? Price;
+  String? receiptItemId;
+  String? menuName;
+  int? menuCount;
+  Float? price;
   DocumentReference? reference;
 
   SettlementItem ({
-    this.ReceiptItemId,
-    this.MenuName,
-    this.MenuCount,
-    this.Price,
+    this.receiptItemId,
+    this.menuName,
+    this.menuCount,
+    this.price,
     this.reference,
   });
 
   SettlementItem.fromJson(dynamic json, this.reference) {
-    ReceiptItemId = json['receiptitemid'];
-    MenuCount = json['usercount'];
-    MenuName = json['name'];
-    Price = json['price'];
+    receiptItemId = json['receiptitemid'];
+    menuCount = json['usercount'];
+    menuName = json['name'];
+    price = json['price'];
   }
 
   Map<String, dynamic> toJson() => {
-    'receiptitemid' : ReceiptItemId,
-    'usercount' : MenuCount,
-    'name' : MenuName,
-    'price' : Price,
+    'receiptitemid' : receiptItemId,
+    'usercount' : menuCount,
+    'name' : menuName,
+    'price' : price,
   };
 
   createSettlementItem(String id, int usercount,
     String name, Float price) async {
 
-    ReceiptItemId = id;
-    MenuCount = usercount;
-    MenuName = name;
-    Price = price;
+    receiptItemId = id;
+    menuCount = usercount;
+    menuName = name;
+    price = price;
 
     await FirebaseFirestore.instance.collection("settlemenitemtlist").doc(id).set(toJson());
     return SettlementItem;

@@ -2,46 +2,46 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Settlement {
 
-  String? SettlementId;
-  List<String>? Receipts;
-  List<String>? SettlementPapers;
-  List<String>? Users;
-  Map<String, bool>? CheckSent;
+  String? settlementId;
+  List<String>? receipts;
+  List<String>? settlementPapers;
+  List<String>? users;
+  Map<String, bool>? checkSent;
   DocumentReference? reference;
 
   Settlement ({
-    this.SettlementId,
-    this.Receipts,
-    this.SettlementPapers,
-    this.Users,
-    this.CheckSent,
+    this.settlementId,
+    this.receipts,
+    this.settlementPapers,
+    this.users,
+    this.checkSent,
     this.reference,
   });
 
   Settlement.fromJson(dynamic json, this.reference) {
-    SettlementId = json['settlementid'];
-    Receipts = List<String>.from(json["receipts"]);
-    SettlementPapers = List<String>.from(json["settlementpapers"]);
-    Users = List<String>.from(json["users"]);
-    CheckSent = Map<String, bool>.from(json['checksent']);
+    settlementId = json['settlementid'];
+    receipts = List<String>.from(json["receipts"]);
+    settlementPapers = List<String>.from(json["settlementpapers"]);
+    users = List<String>.from(json["users"]);
+    checkSent = Map<String, bool>.from(json['checksent']);
   }
 
   Map<String, dynamic> toJson() => {
-    'settlementid' : SettlementId,
-    'receipts' : Receipts,
-    'settlementpapers' : SettlementPapers,
-    'users' : Users,
-    'checksent' : CheckSent,
+    'settlementid' : settlementId,
+    'receipts' : receipts,
+    'settlementpapers' : settlementPapers,
+    'users' : users,
+    'checksent' : checkSent,
   };
 
   createSettlement(String id, List<String> receipts, List<String> settlementpapers,
       List<String> users, Map<String, bool> checksent) async {
 
-    SettlementId = id;
-    Receipts = receipts;
-    SettlementPapers = settlementpapers;
-    Users = users;
-    CheckSent = checksent;
+    settlementId = id;
+    receipts = receipts;
+    settlementPapers = settlementpapers;
+    users = users;
+    checkSent = checksent;
 
     await FirebaseFirestore.instance.collection("settlementlist").doc(id).set(toJson());
     return Settlement;
