@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettlementItem {
 
+  String? settlementItemId;
   String? receiptItemId;
   String? menuName;
   int? menuCount;
@@ -11,6 +12,7 @@ class SettlementItem {
   DocumentReference? reference;
 
   SettlementItem ({
+    this.settlementItemId,
     this.receiptItemId,
     this.menuName,
     this.menuCount,
@@ -19,6 +21,7 @@ class SettlementItem {
   });
 
   SettlementItem.fromJson(dynamic json, this.reference) {
+    settlementItemId = json['settlementitemid'];
     receiptItemId = json['receiptitemid'];
     menuCount = json['usercount'];
     menuName = json['name'];
@@ -26,21 +29,22 @@ class SettlementItem {
   }
 
   Map<String, dynamic> toJson() => {
+    'settlementitemid' : settlementItemId,
     'receiptitemid' : receiptItemId,
     'usercount' : menuCount,
     'name' : menuName,
     'price' : price,
   };
 
-  createSettlementItem(String id, int usercount,
+  createSettlementItem(String sid, String rid, int usercount,
     String name, Float price) async {
-
-    receiptItemId = id;
+    settlementItemId = sid;
+    receiptItemId = rid;
     menuCount = usercount;
     menuName = name;
     price = price;
 
-    await FirebaseFirestore.instance.collection("settlemenitemtlist").doc(id).set(toJson());
+    await FirebaseFirestore.instance.collection("settlemenitemtlist").doc(sid).set(toJson());
     return SettlementItem;
   }
 
