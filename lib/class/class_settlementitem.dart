@@ -37,12 +37,12 @@ class SettlementItem {
   };
 
   createSettlementItem(String sid, String rid, int usercount,
-    String name, Float price) async {
+    String name, Float _price) async {
     settlementItemId = sid;
     receiptItemId = rid;
     menuCount = usercount;
     menuName = name;
-    price = price;
+    price = _price;
 
     await FirebaseFirestore.instance.collection("settlemenitemtlist").doc(sid).set(toJson());
     return SettlementItem;

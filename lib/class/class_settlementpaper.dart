@@ -6,6 +6,7 @@ class SettlementPaper {
   String? settlementPaperId;
   String? settlementId;
   String? userId;
+  String? accountInfo;
   List<String>? settlementItems;
   Float? totalPrice;
   DocumentReference? reference;
@@ -14,6 +15,7 @@ class SettlementPaper {
     this.settlementPaperId,
     this.settlementId,
     this.userId,
+    this.accountInfo,
     this.settlementItems,
     this.totalPrice,
     this.reference,
@@ -23,6 +25,7 @@ class SettlementPaper {
     settlementPaperId = json['settlementpaperid'];
     settlementId = json['settlementid'];
     userId = json['userid'];
+    accountInfo = json['accountinfo'];
     settlementItems = List<String>.from(json["settlementitems"]);
     totalPrice = json['totalprice'];
   }
@@ -31,16 +34,18 @@ class SettlementPaper {
     'settlementpaperid' : settlementPaperId,
     'settlementid' : settlementId,
     'user' : userId,
+    'accountinfo' : accountInfo,
     'settlementitems' : settlementItems,
     'totalprice' : totalPrice,
   };
 
-  createSettlementPaper(String id, String sid, String userid, List<String> items,
+  createSettlementPaper(String id, String sid, String userid, String accountinfo, List<String> items,
       Float totalprice) async {
 
     settlementPaperId = id;
     settlementId = sid;
     userId = userid;
+    accountInfo = accountinfo;
     settlementItems = items;
     totalPrice = totalprice;
 

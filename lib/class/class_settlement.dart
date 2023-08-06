@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Settlement {
 
   String? settlementId;
+  String? accountInfo;
   List<String>? receipts;
   List<String>? settlementPapers;
   List<String>? users;
@@ -11,6 +12,7 @@ class Settlement {
 
   Settlement ({
     this.settlementId,
+    this.accountInfo,
     this.receipts,
     this.settlementPapers,
     this.users,
@@ -20,6 +22,7 @@ class Settlement {
 
   Settlement.fromJson(dynamic json, this.reference) {
     settlementId = json['settlementid'];
+    accountInfo = json['accountinfo'];
     receipts = List<String>.from(json["receipts"]);
     settlementPapers = List<String>.from(json["settlementpapers"]);
     users = List<String>.from(json["users"]);
@@ -28,19 +31,21 @@ class Settlement {
 
   Map<String, dynamic> toJson() => {
     'settlementid' : settlementId,
+    'accountinfo' : accountInfo,
     'receipts' : receipts,
     'settlementpapers' : settlementPapers,
     'users' : users,
     'checksent' : checkSent,
   };
 
-  createSettlement(String id, List<String> receipts, List<String> settlementpapers,
-      List<String> users, Map<String, bool> checksent) async {
+  createSettlement(String id, String accountinfo, List<String> _receipts, List<String> settlementpapers,
+      List<String> _users, Map<String, bool> checksent) async {
 
     settlementId = id;
-    receipts = receipts;
+    accountInfo = accountinfo;
+    receipts = _receipts;
     settlementPapers = settlementpapers;
-    users = users;
+    users = _users;
     checkSent = checksent;
 
     await FirebaseFirestore.instance.collection("settlementlist").doc(id).set(toJson());

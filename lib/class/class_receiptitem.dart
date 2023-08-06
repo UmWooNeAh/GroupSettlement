@@ -34,11 +34,11 @@ class ReceiptItem {
     'menuprice' : menuPrice,
   };
 
-  createReceiptItem(String id, List<String> users,
+  createReceiptItem(String id, List<String> _users,
       String menuname, int menucount, int menuprice) async {
 
     receiptItemId = id;
-    users = users;
+    users = _users;
     menuName = menuname;
     menuCount = menucount;
     menuPrice = menuprice;
