@@ -5,18 +5,12 @@ import 'class_user.dart';
 class Group {
 
   String? groupId;
-  List<String>? settlements;
-  List<String>? users;
+  List<String>? settlements = <String> [];
+  List<String>? users = <String> [];
   String? groupName;
   DocumentReference? reference;
 
-  Group ({
-    this.groupId,
-    this.settlements,
-    this.users,
-    this.groupName,
-    this.reference,
-  });
+  Group ();
 
   Group.fromJson(dynamic json, this.reference) {
 

@@ -4,21 +4,13 @@ class Settlement {
 
   String? settlementId;
   String? accountInfo;
-  List<String>? receipts;
-  List<String>? settlementPapers;
-  List<String>? users;
+  List<String>? receipts = <String> [];
+  List<String>? settlementPapers = <String> [];
+  List<String>? users = <String> [];
   Map<String, bool>? checkSent;
   DocumentReference? reference;
 
-  Settlement ({
-    this.settlementId,
-    this.accountInfo,
-    this.receipts,
-    this.settlementPapers,
-    this.users,
-    this.checkSent,
-    this.reference,
-  });
+  Settlement ();
 
   Settlement.fromJson(dynamic json, this.reference) {
     settlementId = json['settlementid'];

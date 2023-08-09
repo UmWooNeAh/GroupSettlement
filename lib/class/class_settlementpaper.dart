@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SettlementPaper {
@@ -7,19 +6,11 @@ class SettlementPaper {
   String? settlementId;
   String? userId;
   String? accountInfo;
-  List<String>? settlementItems;
-  Float? totalPrice;
+  List<String>? settlementItems = <String> [];
+  double? totalPrice;
   DocumentReference? reference;
 
-  SettlementPaper ({
-    this.settlementPaperId,
-    this.settlementId,
-    this.userId,
-    this.accountInfo,
-    this.settlementItems,
-    this.totalPrice,
-    this.reference,
-  });
+  SettlementPaper ();
 
   SettlementPaper.fromJson(dynamic json, this.reference) {
     settlementPaperId = json['settlementpaperid'];

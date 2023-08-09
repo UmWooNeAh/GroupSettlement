@@ -5,21 +5,13 @@ class Receipt {
 
   String? receiptId;
   String? settlementId;
-  List<String>? receiptItems;
+  List<String>? receiptItems = <String> [];
   String? storeName;
   DateTime? time;
   int? totalPrice;
   DocumentReference? reference;
 
-  Receipt ({
-    this.receiptId,
-    this.settlementId,
-    this.receiptItems,
-    this.storeName,
-    this.time,
-    this.totalPrice,
-    this.reference,
-  });
+  Receipt ();
 
   Receipt.fromJson(dynamic json, this.reference) {
     receiptId = json['receiptid'];

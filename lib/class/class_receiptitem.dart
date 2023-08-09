@@ -3,20 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ReceiptItem {
 
   String? receiptItemId;
-  List<String>? users;
+  List<String>? users = <String> [];
   String? menuName;
   int? menuCount;
   int? menuPrice;
   DocumentReference? reference;
 
-  ReceiptItem ({
-    this.receiptItemId,
-    this.users,
-    this.menuName,
-    this.menuCount,
-    this.menuPrice,
-    this.reference,
-  });
+  ReceiptItem ();
 
   ReceiptItem.fromJson(dynamic json, this.reference) {
     receiptItemId = json['receiptitemid'];

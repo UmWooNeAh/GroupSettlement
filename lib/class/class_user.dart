@@ -6,21 +6,12 @@ class User {
   String? userId;
   String? name;
   String? kakaoId;
-  List<String>? groups;
-  List<String>? settlements;
-  List<String>? settlementPapers;
-
+  List<String> groups = <String> [];
+  List<String> settlements = <String> [];
+  List<String> settlementPapers = <String> [];
   DocumentReference? reference;
 
-  User ({
-    this.userId,
-    this.name,
-    this.kakaoId,
-    this.groups,
-    this.settlements,
-    this.settlementPapers,
-    this.reference,
-});
+  User ();
 
   User.fromJson(dynamic json, this.reference) {
     userId = json['userid'];
