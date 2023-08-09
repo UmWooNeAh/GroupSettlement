@@ -29,7 +29,7 @@ class SettlementItem {
   };
 
   createSettlementItem(String sid, String rid, int usercount,
-    String name, Float _price) async {
+    String name, double _price) async {
     settlementItemId = sid;
     receiptItemId = rid;
     menuCount = usercount;

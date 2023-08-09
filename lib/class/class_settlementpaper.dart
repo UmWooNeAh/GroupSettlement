@@ -31,7 +31,7 @@ class SettlementPaper {
   };
 
   createSettlementPaper(String id, String sid, String userid, String accountinfo, List<String> items,
-      Float totalprice) async {
+      double totalprice) async {
 
     settlementPaperId = id;
     settlementId = sid;
