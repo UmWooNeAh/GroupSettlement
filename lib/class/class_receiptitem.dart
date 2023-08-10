@@ -3,13 +3,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ReceiptItem {
 
   String? receiptItemId;
-  List<String>? users = <String> [];
+  List<String>? users;
   String? menuName;
   int? menuCount;
   int? menuPrice;
   DocumentReference? reference;
 
-  ReceiptItem ();
+  ReceiptItem({
+    this.receiptItemId,
+    this.users,
+    this.menuName,
+    this.menuCount,
+    this.menuPrice
+  });
 
   ReceiptItem.fromJson(dynamic json, this.reference) {
     receiptItemId = json['receiptitemid'];
@@ -27,17 +33,8 @@ class ReceiptItem {
     'menuprice' : menuPrice,
   };
 
-  createReceiptItem(String id, List<String> _users,
-      String menuname, int menucount, int menuprice) async {
-
-    receiptItemId = id;
-    users = _users;
-    menuName = menuname;
-    menuCount = menucount;
-    menuPrice = menuprice;
-
-    await FirebaseFirestore.instance.collection("receiptitemlist").doc(id).set(toJson());
-    return ReceiptItem;
+  void createReceiptItem() async {
+    await FirebaseFirestore.instance.collection("receiptitemlist").doc(receiptItemId).set(toJson());
   }
   
   Future<List<ReceiptItem>> getReceiptItemList() async {

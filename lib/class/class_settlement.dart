@@ -4,13 +4,20 @@ class Settlement {
 
   String? settlementId;
   String? accountInfo;
-  List<String>? receipts = <String> [];
-  List<String>? settlementPapers = <String> [];
-  List<String>? users = <String> [];
+  List<String>? receipts;
+  List<String>? settlementPapers;
+  List<String>? users;
   Map<String, bool>? checkSent;
   DocumentReference? reference;
 
-  Settlement ();
+  Settlement({
+    this.settlementId,
+    this.accountInfo,
+    this.receipts,
+    this.settlementPapers,
+    this.users,
+    this.checkSent,
+  });
 
   Settlement.fromJson(dynamic json, this.reference) {
     settlementId = json['settlementid'];
@@ -30,18 +37,8 @@ class Settlement {
     'checksent' : checkSent,
   };
 
-  createSettlement(String id, String accountinfo, List<String> _receipts, List<String> settlementpapers,
-      List<String> _users, Map<String, bool> checksent) async {
-
-    settlementId = id;
-    accountInfo = accountinfo;
-    receipts = _receipts;
-    settlementPapers = settlementpapers;
-    users = _users;
-    checkSent = checksent;
-
-    await FirebaseFirestore.instance.collection("settlementlist").doc(id).set(toJson());
-    return Settlement;
+  void createSettlement() async {
+    await FirebaseFirestore.instance.collection("settlementlist").doc(settlementId).set(toJson());
   }
 
   Future<List<Settlement>> getSettlementList() async {

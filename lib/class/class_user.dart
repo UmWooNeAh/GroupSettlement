@@ -6,12 +6,19 @@ class User {
   String? userId;
   String? name;
   String? kakaoId;
-  List<String> groups = <String> [];
-  List<String> settlements = <String> [];
-  List<String> settlementPapers = <String> [];
+  List<String>? groups;
+  List<String>? settlements;
+  List<String>? settlementPapers;
   DocumentReference? reference;
 
-  User ();
+  User ({
+    this.userId,
+    this.name,
+    this.kakaoId,
+    this.groups,
+    this.settlements,
+    this.settlementPapers
+  });
 
   User.fromJson(dynamic json, this.reference) {
     userId = json['userid'];
@@ -31,16 +38,8 @@ class User {
     'settlementpapers' : settlementPapers,
   };
 
-  createUser(String userid, String _name, String kakaoid,
-      List<String> _groups, List<String> _settlements, List<String> settlementpapers) async {
-    userId = userid;
-    name = _name;
-    kakaoId = kakaoid;
-    groups = _groups;
-    settlements = _settlements;
-    settlementPapers = settlementpapers;
-    await FirebaseFirestore.instance.collection("userlist").doc(userid).set(toJson());
-    return User;
+  void createUser() async {
+    await FirebaseFirestore.instance.collection("userlist").doc(userId).set(toJson());
   }
 
   Future<List<User>> getUserList() async {

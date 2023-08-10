@@ -5,15 +5,19 @@ import 'class_user.dart';
 class Group {
 
   String? groupId;
-  List<String>? settlements = <String> [];
-  List<String>? users = <String> [];
+  List<String>? settlements;
+  List<String>? users;
   String? groupName;
   DocumentReference? reference;
 
-  Group ();
+  Group({
+    this.groupId,
+    this.settlements,
+    this.users,
+    this.groupName
+  });
 
   Group.fromJson(dynamic json, this.reference) {
-
     groupId = json['groupid'];
     settlements = List<String>.from(json["settlements"]);
     users = List<String>.from(json["users"]);
@@ -27,16 +31,8 @@ class Group {
     'groupName' : groupName,
   };
 
-  createGroup(String groupid, List<String> _settlements,
-      List<String> _users, String groupname) async {
-
-    groupId = groupid;
-    settlements = _settlements;
-    users = _users;
-    groupName = groupname;
-
-    await FirebaseFirestore.instance.collection("grouplist").doc(groupid).set(toJson());
-    return Group;
+  void createGroup() async {
+    await FirebaseFirestore.instance.collection("grouplist").doc(this.groupId).set(toJson());
   }
 
   Future<List<Group>> getGroupList() async {

@@ -6,11 +6,18 @@ class SettlementPaper {
   String? settlementId;
   String? userId;
   String? accountInfo;
-  List<String>? settlementItems = <String> [];
+  List<String>? settlementItems;
   double? totalPrice;
   DocumentReference? reference;
 
-  SettlementPaper ();
+  SettlementPaper({
+    this.settlementPaperId,
+    this.settlementId,
+    this.userId,
+    this.accountInfo,
+    this.settlementItems,
+    this.totalPrice
+  });
 
   SettlementPaper.fromJson(dynamic json, this.reference) {
     settlementPaperId = json['settlementpaperid'];
@@ -30,18 +37,8 @@ class SettlementPaper {
     'totalprice' : totalPrice,
   };
 
-  createSettlementPaper(String id, String sid, String userid, String accountinfo, List<String> items,
-      double totalprice) async {
-
-    settlementPaperId = id;
-    settlementId = sid;
-    userId = userid;
-    accountInfo = accountinfo;
-    settlementItems = items;
-    totalPrice = totalprice;
-
-    await FirebaseFirestore.instance.collection("settlementpaperlist").doc(id).set(toJson());
-    return SettlementPaper;
+  void createSettlementPaper() async {
+    await FirebaseFirestore.instance.collection("settlementpaperlist").doc(this.settlementPaperId).set(toJson());
   }
 
   Future<List<SettlementPaper>> getSettlementPaperList() async {

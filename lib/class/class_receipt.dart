@@ -5,13 +5,20 @@ class Receipt {
 
   String? receiptId;
   String? settlementId;
-  List<String>? receiptItems = <String> [];
+  List<String>? receiptItems;
   String? storeName;
   DateTime? time;
   int? totalPrice;
   DocumentReference? reference;
 
-  Receipt ();
+  Receipt({
+    this.receiptId,
+    this.settlementId,
+    this.receiptItems,
+    this.storeName,
+    this.time,
+    this.totalPrice
+  });
 
   Receipt.fromJson(dynamic json, this.reference) {
     receiptId = json['receiptid'];
@@ -31,18 +38,8 @@ class Receipt {
     'totalprice' : totalPrice,
   };
 
-  createReceipt(String id, String sid, List<String> receiptitems, String storename,
-      DateTime _time, int totalprice) async {
-
-    receiptId = id;
-    settlementId = sid;
-    receiptItems = receiptitems;
-    storeName = storename;
-    time = _time;
-    totalPrice = totalprice;
-
-    await FirebaseFirestore.instance.collection("receiptlist").doc(id).set(toJson());
-    return Receipt;
+  void createReceipt() async {
+    await FirebaseFirestore.instance.collection("receiptlist").doc(receiptId).set(toJson());
   }
 
   Future<List<Receipt>> getReceiptList() async {
