@@ -42,6 +42,7 @@ dependencies:
   logger: ^1.4.0
   logging: ^1.2.0
   get: ^4.6.5
+  kakao_flutter_sdk: ^1.4.1
 
 dev_dependencies:
   flutter_test:
