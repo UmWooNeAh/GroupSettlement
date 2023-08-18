@@ -1,24 +1,25 @@
-import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class SettlementItem {
 
+  String? settlementItemId;
   String? receiptItemId;
   String? menuName;
   int? menuCount;
-  Float? price;
+  double? price;
   DocumentReference? reference;
 
-  SettlementItem ({
+  SettlementItem({
+    this.settlementItemId,
     this.receiptItemId,
     this.menuName,
     this.menuCount,
-    this.price,
-    this.reference,
+    this.price
   });
 
   SettlementItem.fromJson(dynamic json, this.reference) {
+    settlementItemId = json['settlementitemid'];
     receiptItemId = json['receiptitemid'];
     menuCount = json['usercount'];
     menuName = json['name'];
@@ -26,22 +27,15 @@ class SettlementItem {
   }
 
   Map<String, dynamic> toJson() => {
+    'settlementitemid' : settlementItemId,
     'receiptitemid' : receiptItemId,
     'usercount' : menuCount,
     'name' : menuName,
     'price' : price,
   };
 
-  createSettlementItem(String id, int usercount,
-    String name, Float price) async {
-
-    receiptItemId = id;
-    menuCount = usercount;
-    menuName = name;
-    price = price;
-
-    await FirebaseFirestore.instance.collection("settlemenitemtlist").doc(id).set(toJson());
-    return SettlementItem;
+  void createSettlementItem() async {
+    await FirebaseFirestore.instance.collection("settlemenitemtlist").doc(settlementItemId).set(toJson());
   }
 
   Future<List<SettlementItem>> getSettlementItemList() async {
@@ -71,7 +65,5 @@ class SettlementItem {
   SettlementItem.fromQuerySnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
       :this.fromJson(snapshot.data(), snapshot.reference);
-
-
 
 }

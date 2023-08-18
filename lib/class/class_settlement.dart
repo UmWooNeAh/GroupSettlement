@@ -3,23 +3,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Settlement {
 
   String? settlementId;
+  String? accountInfo;
   List<String>? receipts;
   List<String>? settlementPapers;
   List<String>? users;
   Map<String, bool>? checkSent;
   DocumentReference? reference;
 
-  Settlement ({
+  Settlement({
     this.settlementId,
+    this.accountInfo,
     this.receipts,
     this.settlementPapers,
     this.users,
     this.checkSent,
-    this.reference,
   });
 
   Settlement.fromJson(dynamic json, this.reference) {
     settlementId = json['settlementid'];
+    accountInfo = json['accountinfo'];
     receipts = List<String>.from(json["receipts"]);
     settlementPapers = List<String>.from(json["settlementpapers"]);
     users = List<String>.from(json["users"]);
@@ -28,23 +30,15 @@ class Settlement {
 
   Map<String, dynamic> toJson() => {
     'settlementid' : settlementId,
+    'accountinfo' : accountInfo,
     'receipts' : receipts,
     'settlementpapers' : settlementPapers,
     'users' : users,
     'checksent' : checkSent,
   };
 
-  createSettlement(String id, List<String> receipts, List<String> settlementpapers,
-      List<String> users, Map<String, bool> checksent) async {
-
-    settlementId = id;
-    receipts = receipts;
-    settlementPapers = settlementpapers;
-    users = users;
-    checkSent = checksent;
-
-    await FirebaseFirestore.instance.collection("settlementlist").doc(id).set(toJson());
-    return Settlement;
+  void createSettlement() async {
+    await FirebaseFirestore.instance.collection("settlementlist").doc(settlementId).set(toJson());
   }
 
   Future<List<Settlement>> getSettlementList() async {

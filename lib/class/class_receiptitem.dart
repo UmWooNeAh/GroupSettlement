@@ -9,13 +9,12 @@ class ReceiptItem {
   int? menuPrice;
   DocumentReference? reference;
 
-  ReceiptItem ({
+  ReceiptItem({
     this.receiptItemId,
     this.users,
     this.menuName,
     this.menuCount,
-    this.menuPrice,
-    this.reference,
+    this.menuPrice
   });
 
   ReceiptItem.fromJson(dynamic json, this.reference) {
@@ -34,17 +33,8 @@ class ReceiptItem {
     'menuprice' : menuPrice,
   };
 
-  createReceiptItem(String id, List<String> users,
-      String menuname, int menucount, int menuprice) async {
-
-    receiptItemId = id;
-    users = users;
-    menuName = menuname;
-    menuCount = menucount;
-    menuPrice = menuprice;
-
-    await FirebaseFirestore.instance.collection("receiptitemlist").doc(id).set(toJson());
-    return ReceiptItem;
+  void createReceiptItem() async {
+    await FirebaseFirestore.instance.collection("receiptitemlist").doc(receiptItemId).set(toJson());
   }
   
   Future<List<ReceiptItem>> getReceiptItemList() async {
