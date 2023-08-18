@@ -69,7 +69,6 @@ class SettlementViewModel{
 
   void deleteSettlementItem(String receiptItemId, String userId){
     _deleteItemToSettlementPaper(receiptItemId, userId);
-
     // ReceiptItem에 user삭제
     receiptItems[receiptItemId]!.users!.remove(userId);
 
@@ -175,4 +174,16 @@ class SettlementViewModel{
     subGroups[subGroupId]!.add(userId);
   }
 
+  void completeSettlement(){
+    // settlement Update
+    // SettlementPaper Update
+    // SettlementItem Update
+    // User Update
+    // Receipt Update
+    // ReceiptItem Update
+  }
+
+  void requestSettlement(){
+
+  }
 }
