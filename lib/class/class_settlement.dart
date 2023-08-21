@@ -5,8 +5,8 @@ class Settlement {
   String? settlementId;
   String? accountInfo;
   List<String>? receipts;
-  List<String>? settlementPapers;
-  List<String>? users;
+  Map<String, String>? settlementPapers;
+  List<String>? serviceUsers;
   Map<String, bool>? checkSent;
   DocumentReference? reference;
 
@@ -15,7 +15,7 @@ class Settlement {
     this.accountInfo,
     this.receipts,
     this.settlementPapers,
-    this.users,
+    this.serviceUsers,
     this.checkSent,
   });
 
@@ -23,8 +23,8 @@ class Settlement {
     settlementId = json['settlementid'];
     accountInfo = json['accountinfo'];
     receipts = List<String>.from(json["receipts"]);
-    settlementPapers = List<String>.from(json["settlementpapers"]);
-    users = List<String>.from(json["users"]);
+    settlementPapers = Map<String, String>.from(json["settlementpapers"]);
+    serviceUsers = List<String>.from(json["serviceusers"]);
     checkSent = Map<String, bool>.from(json['checksent']);
   }
 
@@ -33,7 +33,7 @@ class Settlement {
     'accountinfo' : accountInfo,
     'receipts' : receipts,
     'settlementpapers' : settlementPapers,
-    'users' : users,
+    'serviceusers' : serviceUsers,
     'checksent' : checkSent,
   };
 

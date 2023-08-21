@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ReceiptItem {
 
   String? receiptItemId;
-  List<String>? users;
+  List<String>? serviceUsers;
   String? menuName;
   int? menuCount;
   int? menuPrice;
@@ -11,7 +11,7 @@ class ReceiptItem {
 
   ReceiptItem({
     this.receiptItemId,
-    this.users,
+    this.serviceUsers,
     this.menuName,
     this.menuCount,
     this.menuPrice
@@ -19,7 +19,7 @@ class ReceiptItem {
 
   ReceiptItem.fromJson(dynamic json, this.reference) {
     receiptItemId = json['receiptitemid'];
-    users = List<String>.from(json["users"]);
+    serviceUsers = List<String>.from(json["serviceusers"]);
     menuName = json['menuname'];
     menuCount = json['menucount'];
     menuPrice = json['menuprice'];
@@ -27,7 +27,7 @@ class ReceiptItem {
 
   Map<String, dynamic> toJson() => {
     'receiptitemid' :receiptItemId,
-    'users' : users,
+    'serviceusers' : serviceUsers,
     'menuname' : menuName,
     'menucount' : menuCount,
     'menuprice' : menuPrice,

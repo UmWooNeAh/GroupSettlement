@@ -4,7 +4,7 @@ class SettlementPaper {
 
   String? settlementPaperId;
   String? settlementId;
-  String? userId;
+  String? serviceUserId;
   String? accountInfo;
   List<String>? settlementItems;
   double? totalPrice;
@@ -13,7 +13,7 @@ class SettlementPaper {
   SettlementPaper({
     this.settlementPaperId,
     this.settlementId,
-    this.userId,
+    this.serviceUserId,
     this.accountInfo,
     this.settlementItems,
     this.totalPrice
@@ -22,7 +22,7 @@ class SettlementPaper {
   SettlementPaper.fromJson(dynamic json, this.reference) {
     settlementPaperId = json['settlementpaperid'];
     settlementId = json['settlementid'];
-    userId = json['userid'];
+    serviceUserId = json['serviceuserid'];
     accountInfo = json['accountinfo'];
     settlementItems = List<String>.from(json["settlementitems"]);
     totalPrice = json['totalprice'];
@@ -31,7 +31,7 @@ class SettlementPaper {
   Map<String, dynamic> toJson() => {
     'settlementpaperid' : settlementPaperId,
     'settlementid' : settlementId,
-    'user' : userId,
+    'serviceuserid' : serviceUserId,
     'accountinfo' : accountInfo,
     'settlementitems' : settlementItems,
     'totalprice' : totalPrice,

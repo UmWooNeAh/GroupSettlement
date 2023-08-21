@@ -3,7 +3,7 @@ import 'class_settlement.dart';
 
 class User {
  
-  String? userId;
+  String? serviceUserId;
   String? name;
   String? kakaoId;
   List<String>? groups;
@@ -12,7 +12,7 @@ class User {
   DocumentReference? reference;
 
   User ({
-    this.userId,
+    this.serviceUserId,
     this.name,
     this.kakaoId,
     this.groups,
@@ -21,7 +21,7 @@ class User {
   });
 
   User.fromJson(dynamic json, this.reference) {
-    userId = json['userid'];
+    serviceUserId = json['serviceuserid'];
     name = json['name'];
     kakaoId = json['kakaoid'];
     groups = List<String>.from(json["groups"]);
@@ -30,7 +30,7 @@ class User {
   }
 
   Map<String, dynamic> toJson() => {
-    'userid' : userId,
+    'serviceuserid' : serviceUserId,
     'name' : name,
     'kakaoid' : kakaoId,
     'groups' : groups,
@@ -39,7 +39,7 @@ class User {
   };
 
   void createUser() async {
-    await FirebaseFirestore.instance.collection("userlist").doc(userId).set(toJson());
+    await FirebaseFirestore.instance.collection("userlist").doc(serviceUserId).set(toJson());
   }
 
   Future<List<User>> getUserList() async {
