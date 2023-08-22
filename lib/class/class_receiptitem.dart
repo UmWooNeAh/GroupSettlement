@@ -7,7 +7,6 @@ class ReceiptItem {
   String? menuName;
   int? menuCount;
   int? menuPrice;
-  DocumentReference? reference;
 
   ReceiptItem({
     this.receiptItemId,
@@ -17,7 +16,7 @@ class ReceiptItem {
     this.menuPrice
   });
 
-  ReceiptItem.fromJson(dynamic json, this.reference) {
+  ReceiptItem.fromJson(dynamic json) {
     receiptItemId = json['receiptitemid'];
     serviceUsers = List<String>.from(json["serviceusers"]);
     menuName = json['menuname'];
@@ -59,9 +58,9 @@ class ReceiptItem {
 
   ReceiptItem.fromSnapShot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : this.fromJson(snapshot.data(), snapshot.reference);
+      : this.fromJson(snapshot.data());
 
   ReceiptItem.fromQuerySnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      :this.fromJson(snapshot.data(), snapshot.reference);
+      :this.fromJson(snapshot.data());
 }

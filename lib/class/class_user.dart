@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'class_settlement.dart';
 
-class User {
+class ServiceUser {
  
   String? serviceUserId;
   String? name;
@@ -9,9 +9,8 @@ class User {
   List<String>? groups;
   List<String>? settlements;
   List<String>? settlementPapers;
-  DocumentReference? reference;
 
-  User ({
+  ServiceUser ({
     this.serviceUserId,
     this.name,
     this.kakaoId,
@@ -20,7 +19,7 @@ class User {
     this.settlementPapers
   });
 
-  User.fromJson(dynamic json, this.reference) {
+  ServiceUser.fromJson(dynamic json) {
     serviceUserId = json['serviceuserid'];
     name = json['name'];
     kakaoId = json['kakaoid'];
@@ -42,23 +41,23 @@ class User {
     await FirebaseFirestore.instance.collection("userlist").doc(serviceUserId).set(toJson());
   }
 
-  Future<List<User>> getUserList() async {
+  Future<List<ServiceUser>> getUserList() async {
     CollectionReference<Map<String, dynamic>> _collectionReference =
     FirebaseFirestore.instance.collection("userlist");
     QuerySnapshot<Map<String,dynamic>> querySnapshot =
     await _collectionReference.get();
-    List<User> users = [];
+    List<ServiceUser> users = [];
     for(var doc in querySnapshot.docs) {
-      User user = User.fromQuerySnapshot(doc);
+      ServiceUser user = ServiceUser.fromQuerySnapshot(doc);
       users.add(user);
     }
     return users;
   }
 
-  Future<User> getUserByUserId(String userid) async{
+  Future<ServiceUser> getUserByUserId(String userid) async{
     DocumentSnapshot<Map<String, dynamic>> result =
     await FirebaseFirestore.instance.collection("userlist").doc(userid).get();
-    User user = User.fromSnapShot(result);
+    ServiceUser user = ServiceUser.fromSnapShot(result);
     return user;
   }
 
@@ -73,13 +72,13 @@ class User {
     return stmlist;
   }
 
-  User.fromSnapShot(
+  ServiceUser.fromSnapShot(
     DocumentSnapshot<Map<String, dynamic>> snapshot)
-    : this.fromJson(snapshot.data(), snapshot.reference);
+    : this.fromJson(snapshot.data());
 
-  User.fromQuerySnapshot(
+  ServiceUser.fromQuerySnapshot(
     QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-    :this.fromJson(snapshot.data(), snapshot.reference);
+    :this.fromJson(snapshot.data());
 
 }
 

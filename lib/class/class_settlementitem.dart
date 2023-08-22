@@ -8,7 +8,6 @@ class SettlementItem {
   String? menuName;
   int? menuCount;
   double? price;
-  DocumentReference? reference;
 
   SettlementItem({
     this.settlementItemId,
@@ -18,7 +17,7 @@ class SettlementItem {
     this.price
   });
 
-  SettlementItem.fromJson(dynamic json, this.reference) {
+  SettlementItem.fromJson(dynamic json) {
     settlementItemId = json['settlementitemid'];
     receiptItemId = json['receiptitemid'];
     menuCount = json['usercount'];
@@ -60,10 +59,10 @@ class SettlementItem {
 
   SettlementItem.fromSnapShot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : this.fromJson(snapshot.data(), snapshot.reference);
+      : this.fromJson(snapshot.data());
 
   SettlementItem.fromQuerySnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      :this.fromJson(snapshot.data(), snapshot.reference);
+      :this.fromJson(snapshot.data());
 
 }

@@ -8,7 +8,6 @@ class Group {
   List<String>? settlements;
   List<String>? serviceUsers;
   String? groupName;
-  DocumentReference? reference;
 
   Group({
     this.groupId,
@@ -17,7 +16,7 @@ class Group {
     this.groupName
   });
 
-  Group.fromJson(dynamic json, this.reference) {
+  Group.fromJson(dynamic json) {
     groupId = json['groupid'];
     settlements = List<String>.from(json["settlements"]);
     serviceUsers = List<String>.from(json["serviceusers"]);
@@ -55,12 +54,12 @@ class Group {
     return group;
   }
 
-  Future<List<User>> getUserListInGroup() async {
-    List<User> userlist = [];
+  Future<List<ServiceUser>> getUserListInGroup() async {
+    List<ServiceUser> userlist = [];
     for(var userid in serviceUsers!) {
       DocumentSnapshot<Map<String, dynamic>> result =
       await FirebaseFirestore.instance.collection("userlist").doc(userid).get();
-      User user = User.fromSnapShot(result);
+      ServiceUser user = ServiceUser.fromSnapShot(result);
       userlist.add(user);
     }
     return userlist;
@@ -79,10 +78,10 @@ class Group {
 
   Group.fromSnapShot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : this.fromJson(snapshot.data(), snapshot.reference);
+      : this.fromJson(snapshot.data());
 
   Group.fromQuerySnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      :this.fromJson(snapshot.data(), snapshot.reference);
+      :this.fromJson(snapshot.data());
 
 }

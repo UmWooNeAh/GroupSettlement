@@ -8,7 +8,6 @@ class Settlement {
   Map<String, String>? settlementPapers;
   List<String>? serviceUsers;
   Map<String, bool>? checkSent;
-  DocumentReference? reference;
 
   Settlement({
     this.settlementId,
@@ -19,7 +18,7 @@ class Settlement {
     this.checkSent,
   });
 
-  Settlement.fromJson(dynamic json, this.reference) {
+  Settlement.fromJson(dynamic json) {
     settlementId = json['settlementid'];
     accountInfo = json['accountinfo'];
     receipts = List<String>.from(json["receipts"]);
@@ -63,10 +62,10 @@ class Settlement {
 
   Settlement.fromSnapShot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : this.fromJson(snapshot.data(), snapshot.reference);
+      : this.fromJson(snapshot.data());
 
   Settlement.fromQuerySnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      :this.fromJson(snapshot.data(), snapshot.reference);
+      :this.fromJson(snapshot.data());
 
 }

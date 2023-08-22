@@ -8,7 +8,6 @@ class SettlementPaper {
   String? accountInfo;
   List<String>? settlementItems;
   double? totalPrice;
-  DocumentReference? reference;
 
   SettlementPaper({
     this.settlementPaperId,
@@ -19,7 +18,7 @@ class SettlementPaper {
     this.totalPrice
   });
 
-  SettlementPaper.fromJson(dynamic json, this.reference) {
+  SettlementPaper.fromJson(dynamic json) {
     settlementPaperId = json['settlementpaperid'];
     settlementId = json['settlementid'];
     serviceUserId = json['serviceuserid'];
@@ -64,11 +63,11 @@ class SettlementPaper {
 
   SettlementPaper.fromSnapShot(
       DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : this.fromJson(snapshot.data(), snapshot.reference);
+      : this.fromJson(snapshot.data());
 
   SettlementPaper.fromQuerySnapshot(
       QueryDocumentSnapshot<Map<String, dynamic>> snapshot)
-      :this.fromJson(snapshot.data(), snapshot.reference);
+      :this.fromJson(snapshot.data());
 
 
 }
