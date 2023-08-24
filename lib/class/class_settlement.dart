@@ -8,6 +8,7 @@ class Settlement {
   Map<String, String>? settlementPapers;
   List<String>? serviceUsers;
   Map<String, bool>? checkSent;
+  bool isFinished;
 
   Settlement({
     this.settlementId,
@@ -16,6 +17,7 @@ class Settlement {
     this.settlementPapers,
     this.serviceUsers,
     this.checkSent,
+    this.isFinished,
   });
 
   Settlement.fromJson(dynamic json) {
@@ -25,6 +27,7 @@ class Settlement {
     settlementPapers = Map<String, String>.from(json["settlementpapers"]);
     serviceUsers = List<String>.from(json["serviceusers"]);
     checkSent = Map<String, bool>.from(json['checksent']);
+    isFinished = json['isfinished'];
   }
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +37,7 @@ class Settlement {
     'settlementpapers' : settlementPapers,
     'serviceusers' : serviceUsers,
     'checksent' : checkSent,
+    'isfinished' : isFinished,
   };
 
   void createSettlement() async {
