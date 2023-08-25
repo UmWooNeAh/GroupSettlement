@@ -58,6 +58,8 @@ class Clova{
         final responseBody = await response.stream.bytesToString();
         final res = jsonDecode(responseBody);
 
+        final outputFile = File('./output.json');
+        await outputFile.writeAsString(jsonEncode(res), encoding: utf8);
         return res;
       } else {
         print('POST failed: ${response.statusCode}');
@@ -69,8 +71,26 @@ class Clova{
 }
 
 void main() async{
-  Clova test = Clova(File('마라탕.jpg'));
+  Clova test = Clova(File('d.png'));
   var result = await test.analyze();
   print(result);
+  int itemLength;
+  itemLength = result['images'][0]['receipt']['result']['subResults'][0]['items'].length;
 
+  //Receipt receipt = Receipt(ReceiptId: 'a',ReceiptItems: [],StoreName: ,Time:,TotalPrice:);
+  //receipt.StoreName = result['images'][0]['receipt']['result']['storeInfo']['name']['text'];
+  //receipt.TotalPrice = result['images'][0]['receipt']['result']['totalPrice']['price']['text'];
+
+  // for(int i=0;i<itemLength;i++){
+  //   var temp = result['images'][0]['receipt']['result']['subResults'][0]['items'][i];
+  //   var name = temp['name']['text'];
+  //   var count = int.parse(temp['count']['text']);
+  //   var price = int.parse(temp['price']['price']['text'].replaceAll(',',''));
+
+    //print(name+count.toString()+' '+price.toString());
+
+    //ReceiptItem item = ReceiptItem(receiptItemId: 'a',users:[],menuName:name,menuCount:count,menuPrice: price);
+
+  //}
 }
+
