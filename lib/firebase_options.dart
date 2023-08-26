@@ -17,14 +17,25 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
+      case TargetPlatform.iOS:
+        return ios;
+      case TargetPlatform.macOS:
+        return macos;
+      case TargetPlatform.windows:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -32,12 +43,45 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAxB-YVqaF8sePWXmbtcuVu_ms_UKO8ksw',
-    appId: '1:585433136052:android:a36d5b9c77be684bb190e1',
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCPjamBvqATGNm6Ex6xPe4aHkaDvzhHVOo',
+    appId: '1:585433136052:web:d5219448e51fa77db190e1',
     messagingSenderId: '585433136052',
     projectId: 'fir-df691',
+    authDomain: 'fir-df691.firebaseapp.com',
+    databaseURL: 'https://fir-df691-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'fir-df691.appspot.com',
+    measurementId: 'G-XTFF2MKFHX',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAxB-YVqaF8sePWXmbtcuVu_ms_UKO8ksw',
+    appId: '1:585433136052:android:e001587314183d5db190e1',
+    messagingSenderId: '585433136052',
+    projectId: 'fir-df691',
+    databaseURL: 'https://fir-df691-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'fir-df691.appspot.com',
   );
 
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDFpvdREix7LwYL0rcEehJ_KMK6099k1-k',
+    appId: '1:585433136052:ios:ace0eb95c0d04038b190e1',
+    messagingSenderId: '585433136052',
+    projectId: 'fir-df691',
+    databaseURL: 'https://fir-df691-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'fir-df691.appspot.com',
+    iosClientId: '585433136052-bs40tembr72vmf6f0em2uma9a34ri3ou.apps.googleusercontent.com',
+    iosBundleId: 'com.example.groupSettlement',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDFpvdREix7LwYL0rcEehJ_KMK6099k1-k',
+    appId: '1:585433136052:ios:f316a1c74f2d559ab190e1',
+    messagingSenderId: '585433136052',
+    projectId: 'fir-df691',
+    databaseURL: 'https://fir-df691-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'fir-df691.appspot.com',
+    iosClientId: '585433136052-qqucb2tlbnbf686i4bcs4e1phi16f1dg.apps.googleusercontent.com',
+    iosBundleId: 'com.example.groupSettlement.RunnerTests',
+  );
 }

@@ -8,7 +8,7 @@ class Settlement {
   Map<String, String>? settlementPapers;
   List<String>? serviceUsers;
   Map<String, bool>? checkSent;
-  bool isFinished;
+  bool? isFinished;
 
   Settlement({
     this.settlementId,
