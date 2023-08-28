@@ -6,6 +6,7 @@ class ServiceUser {
   String? serviceUserId;
   String? name;
   String? kakaoId;
+  String? fcmToken;
   List<String>? groups;
   List<String>? settlements;
   List<String>? settlementPapers;
@@ -14,6 +15,7 @@ class ServiceUser {
     this.serviceUserId,
     this.name,
     this.kakaoId,
+    this.fcmToken,
     this.groups,
     this.settlements,
     this.settlementPapers
@@ -23,6 +25,7 @@ class ServiceUser {
     serviceUserId = json['serviceuserid'];
     name = json['name'];
     kakaoId = json['kakaoid'];
+    fcmToken = json['fcmtoken'];
     groups = List<String>.from(json["groups"]);
     settlements = List<String>.from(json["settlements"]);
     settlementPapers = List<String>.from(json["settlementpapers"]);
@@ -32,6 +35,7 @@ class ServiceUser {
     'serviceuserid' : serviceUserId,
     'name' : name,
     'kakaoid' : kakaoId,
+    'fcmtoken' : fcmToken,
     'groups' : groups,
     'settlements' : settlements,
     'settlementpapers' : settlementPapers,
